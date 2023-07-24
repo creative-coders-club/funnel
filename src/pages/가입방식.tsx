@@ -7,6 +7,10 @@ type Props = {
   onNext: (...args: any) => void;
 };
 export function 가입방식({ onNext }: Props) {
+  const handleClickNext = () => {
+    onNext('010-1234-5678');
+  };
+
   return (
     <가입방식Wrapper>
       <section style={{ flex: 1 }}>
@@ -15,7 +19,7 @@ export function 가입방식({ onNext }: Props) {
         <Text>010-1234-5678</Text>
       </section>
       <section>
-        <Button onClick={onNext}>내 번호 그대로 쓰기</Button>
+        <Button onClick={handleClickNext}>내 번호 그대로 쓰기</Button>
       </section>
     </가입방식Wrapper>
   );
