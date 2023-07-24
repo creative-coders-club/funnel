@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useState } from 'react';
 
+import { Step } from '@/components/Step.tsx';
 import { PageLayout, 가입방식, 가입완료, 주민번호, 집주소 } from '@/pages';
 
 const InitRegisterData = {
@@ -15,23 +16,23 @@ function App() {
 
   return (
     <PageLayout>
-      {step === '가입방식' && (
+      <Step show={step === '가입방식'}>
         <가입방식
           onNext={(data) => {
             setRegisterData((prev) => ({ ...prev, 가입방식: data }));
             setStep('주민번호');
           }}
         />
-      )}
-      {step === '주민번호' && (
+      </Step>
+      <Step show={step === '주민번호'}>
         <주민번호
           onNext={(data) => {
             setRegisterData((prev) => ({ ...prev, 주민번호: data }));
             setStep('집주소');
           }}
         />
-      )}
-      {step === '집주소' && (
+      </Step>
+      <Step show={step === '집주소'}>
         <집주소
           onNext={(data) => {
             axios
@@ -46,8 +47,10 @@ function App() {
               });
           }}
         />
-      )}
-      {step === '가입성공' && <가입완료 onNext={() => setStep('가입방식')} />}
+      </Step>
+      <Step show={step === '가입성공'}>
+        <가입완료 onNext={() => setStep('가입방식')} />
+      </Step>
     </PageLayout>
   );
 }
