@@ -1,31 +1,20 @@
-import viteLogo from '/vite.svg';
-import { useState } from 'react';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
-import reactLogo from './assets/react.svg';
-import './App.css';
+import { 가입방식 } from '@/components/가입방식.tsx';
+import { 가입완료 } from '@/components/가입완료.tsx';
+import { 주민번호 } from '@/components/주민번호.tsx';
+import { 집주소 } from '@/components/집주소.tsx';
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>count is {count}</button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">Click on the Vite and React logos to learn more</p>
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/가입방식" element={<가입방식 />} />
+        <Route path="/주민번호" element={<주민번호 />} />
+        <Route path="/집주소" element={<집주소 />} />
+        <Route path="/가입완료" element={<가입완료 />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
