@@ -48,7 +48,7 @@ function App() {
 
 export default App;
 
-type RegisterData = {
+export type RegisterData = {
   가입방식: string;
   주민번호: string;
   집주소: string;
