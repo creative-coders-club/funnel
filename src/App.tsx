@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { useState } from 'react';
 
 import { PageLayout, 가입방식, 가입완료, 주민번호, 집주소 } from '@/pages';
@@ -33,11 +34,16 @@ function App() {
       {step === '집주소' && (
         <집주소
           onNext={(data) => {
-            console.log('data', registerData, data);
-            // setRegisterData((prev) => ({ ...prev, 집주소: data }));
-
-            // TODO: api 요청
-            // setStep('가입성공');
+            axios
+              .post('/api/user', { ...registerData, 집주소: data })
+              .then(() => {
+                alert('가입성공');
+                setStep('가입성공');
+              })
+              .catch((error) => {
+                alert('유저 정보 등록 실패');
+                console.error('error', error);
+              });
           }}
         />
       )}
