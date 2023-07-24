@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useState } from 'react';
 
-import { Step } from '@/components/Step.tsx';
+import { useFunnel } from '@/hooks/useFunnel.tsx';
 import { PageLayout, 가입방식, 가입완료, 주민번호, 집주소 } from '@/pages';
 
 const InitRegisterData = {
@@ -11,46 +11,48 @@ const InitRegisterData = {
 };
 
 function App() {
-  const [registerData, setRegisterData] = useState<RegisterData>(InitRegisterData);
-  const [step, setStep] = useState<'가입방식' | '주민번호' | '집주소' | '가입성공'>('가입방식');
+  const [Funnel, setStep] = useFunnel<'가입방식' | '주민번호' | '집주소' | '가입성공'>('가입방식');
 
+  const [registerData, setRegisterData] = useState<RegisterData>(InitRegisterData);
   return (
     <PageLayout>
-      <Step show={step === '가입방식'}>
-        <가입방식
-          onNext={(data) => {
-            setRegisterData((prev) => ({ ...prev, 가입방식: data }));
-            setStep('주민번호');
-          }}
-        />
-      </Step>
-      <Step show={step === '주민번호'}>
-        <주민번호
-          onNext={(data) => {
-            setRegisterData((prev) => ({ ...prev, 주민번호: data }));
-            setStep('집주소');
-          }}
-        />
-      </Step>
-      <Step show={step === '집주소'}>
-        <집주소
-          onNext={(data) => {
-            axios
-              .post('/api/user', { ...registerData, 집주소: data })
-              .then(() => {
-                alert('가입성공');
-                setStep('가입성공');
-              })
-              .catch((error) => {
-                alert('유저 정보 등록 실패');
-                console.error('error', error);
-              });
-          }}
-        />
-      </Step>
-      <Step show={step === '가입성공'}>
-        <가입완료 onNext={() => setStep('가입방식')} />
-      </Step>
+      <Funnel>
+        <Funnel.Step name="가입방식">
+          <가입방식
+            onNext={(data) => {
+              setRegisterData((prev) => ({ ...prev, 가입방식: data }));
+              setStep('주민번호');
+            }}
+          />
+        </Funnel.Step>
+        <Funnel.Step name="주민번호">
+          <주민번호
+            onNext={(data) => {
+              setRegisterData((prev) => ({ ...prev, 주민번호: data }));
+              setStep('집주소');
+            }}
+          />
+        </Funnel.Step>
+        <Funnel.Step name="집주소">
+          <집주소
+            onNext={(data) => {
+              axios
+                .post('/api/user', { ...registerData, 집주소: data })
+                .then(() => {
+                  alert('가입성공');
+                  setStep('가입성공');
+                })
+                .catch((error) => {
+                  alert('유저 정보 등록 실패');
+                  console.error('error', error);
+                });
+            }}
+          />
+        </Funnel.Step>
+        <Funnel.Step name="가입성공">
+          <가입완료 onNext={() => setStep('가입방식')} />
+        </Funnel.Step>
+      </Funnel>
     </PageLayout>
   );
 }
