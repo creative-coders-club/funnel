@@ -1,31 +1,18 @@
-import viteLogo from '/vite.svg';
 import { useState } from 'react';
 
-import reactLogo from './assets/react.svg';
-import './App.css';
+import { PageLayout, 가입방식, 가입완료, 주민번호, 집주소 } from '@/pages';
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [registerData, setRegisterData] = useState();
+  const [step, setStep] = useState<'가입방식' | '주민번호' | '집주소' | '가입성공'>('가입방식');
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>count is {count}</button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">Click on the Vite and React logos to learn more</p>
-    </>
+    <PageLayout>
+      {step === '가입방식' && <가입방식 onNext={() => setStep('주민번호')} />}
+      {step === '주민번호' && <주민번호 onNext={() => setStep('집주소')} />}
+      {step === '집주소' && <집주소 onNext={() => setStep('가입성공')} />}
+      {step === '가입성공' && <가입완료 onNext={() => setStep('가입방식')} />}
+    </PageLayout>
   );
 }
 
