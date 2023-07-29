@@ -1,4 +1,13 @@
+import { useLayoutEffect } from 'react';
+
+import { useActions } from '@/hooks/useActions.tsx';
+
 export const 가입완료 = () => {
+  const { submitRegisterData } = useActions();
+
+  useLayoutEffect(() => {
+    submitRegisterData();
+  }, []);
   return (
     <>
       <div>
