@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useActions } from '@/hooks/useActions.tsx';
 
 export const IdNumber = () => {
-  const { iDNumberRef, onClick주민번호 } = useActions();
+  const { iDNumberRef, handleClickId } = useActions();
 
   return (
     <>
@@ -20,8 +20,8 @@ export const IdNumber = () => {
         />
       </div>
       <div>
-        <button onClick={onClick주민번호}>
-          <Link to={'/집주소'}>다음</Link>
+        <button onClick={handleClickId}>
+          <Link to={'/address'}>다음</Link>
         </button>
       </div>
     </>

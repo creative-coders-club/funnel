@@ -9,19 +9,19 @@ export const useActions = () => {
   const iDNumberRef = useRef<HTMLInputElement>(null);
   const addressRef = useRef<HTMLInputElement>(null);
 
-  const onClick가입방식 = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleClickRegsiterMethod = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
 
     dispatchIfDefined(phoneNumberRef, 'SET_PHONE');
   };
 
-  const onClick주민번호 = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleClickId = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
 
     dispatchIfDefined(iDNumberRef, 'SET_ID_NUMBER');
   };
 
-  const onClick집주소 = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleClickAddress = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
 
     dispatchIfDefined(addressRef, 'SET_ADDRESS');
@@ -39,11 +39,11 @@ export const useActions = () => {
 
   return {
     phoneNumberRef,
-    onClick가입방식,
+    handleClickRegsiterMethod,
     iDNumberRef,
-    onClick주민번호,
+    handleClickId,
     addressRef,
-    onClick집주소,
+    handleClickAddress,
     submitRegisterData,
   };
 };

@@ -3,6 +3,6 @@
 @tailwind utilities;
 
 body {
-    @apply p-5;
-    @apply h-screen;
+  @apply p-5;
+  @apply h-screen;
 }
