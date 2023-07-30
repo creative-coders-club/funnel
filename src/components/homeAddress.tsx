@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 
 import { useActions } from '@/hooks/useActions.tsx';
 
-export const 집주소 = () => {
+export const HomeAddress = () => {
   const { addressRef, onClick집주소 } = useActions();
 
   return (

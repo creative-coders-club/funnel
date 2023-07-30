@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 
 import { useActions } from '@/hooks/useActions.tsx';
 
-export const 주민번호 = () => {
+export const IdNumber = () => {
   const { iDNumberRef, onClick주민번호 } = useActions();
 
   return (

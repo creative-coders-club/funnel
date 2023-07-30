@@ -2,12 +2,12 @@ import { Link } from 'react-router-dom';
 
 import { useActions } from '@/hooks/useActions.tsx';
 
-export const 가입방식 = () => {
+export const RegisterMethods = () => {
   const { phoneNumberRef, onClick가입방식 } = useActions();
 
   return (
     <>
-      <h2>지금 휴대폰 번호를 그대로 쓸까요?</h2>
+      <h2 className="text-red-400">지금 휴대폰 번호를 그대로 쓸까요?</h2>
       <div>
         <label htmlFor="phone">휴대폰 번호</label>
         <input

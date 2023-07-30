@@ -2,7 +2,7 @@ import { useLayoutEffect } from 'react';
 
 import { useActions } from '@/hooks/useActions.tsx';
 
-export const 가입완료 = () => {
+export const RegisterComplete = () => {
   const { submitRegisterData } = useActions();
 
   useLayoutEffect(() => {
