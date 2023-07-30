@@ -7,6 +7,7 @@ import { RegisterComplete } from '@/components/registerComplete.tsx';
 import { RegisterMethods } from '@/components/registerMethods.tsx';
 import { RegisterDataContext } from '@/contexts/registerContext.tsx';
 import { reducer } from '@/reducers/registerReducer.ts';
+import './App.css';
 
 const initialState = {
   phone: '',
@@ -22,9 +23,9 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<RegisterMethods />} />
-          <Route path="/주민번호" element={<IdNumber />} />
-          <Route path="/집주소" element={<HomeAddress />} />
-          <Route path="/가입완료" element={<RegisterComplete />} />
+          <Route path="/id-number" element={<IdNumber />} />
+          <Route path="/address" element={<HomeAddress />} />
+          <Route path="/complete" element={<RegisterComplete />} />
         </Routes>
       </BrowserRouter>
     </RegisterDataContext.Provider>
