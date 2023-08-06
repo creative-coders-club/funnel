@@ -1,20 +1,19 @@
-import { useLayoutEffect } from 'react';
+import { Button } from '@/components/common/Button.tsx';
 
-import { useActions } from '@/hooks/useActions.tsx';
-
-export const RegisterComplete = () => {
-  const { submitRegisterData } = useActions();
-
-  useLayoutEffect(() => {
-    submitRegisterData();
-  }, []);
+export const RegisterComplete = ({ onNext }: RegisterCompleteProps) => {
   return (
-    <>
+    <div className="w-full h-full flex flex-col justify-between">
       <div>
         <img src="" alt="" />
         <h1>가입완료!</h1>
       </div>
-      <button>다음</button>
-    </>
+      <Button variant={Button.variant.PRIMARY} onClick={onNext}>
+        다음
+      </Button>
+    </div>
   );
+};
+
+type RegisterCompleteProps = {
+  onNext: () => void;
 };

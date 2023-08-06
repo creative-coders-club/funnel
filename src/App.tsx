@@ -1,34 +1,58 @@
-import { useReducer } from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { useState } from 'react';
 
 import { HomeAddress } from '@/components/homeAddress.tsx';
 import { IdNumber } from '@/components/idNumber.tsx';
 import { RegisterComplete } from '@/components/registerComplete.tsx';
 import { RegisterMethods } from '@/components/registerMethods.tsx';
-import { RegisterDataContext } from '@/contexts/registerContext.tsx';
-import { reducer } from '@/reducers/registerReducer.ts';
+import { RegisterData } from '@/types/register.ts';
 import './App.css';
 
-const initialState = {
+const initialState: RegisterData = {
   phone: '',
   idNumber: '',
   address: '',
 };
 
 function App() {
-  const [registerData, dispatch] = useReducer(reducer, initialState);
+  const [registerData, setRegisterData] = useState(initialState);
+  const [step, setStep] = useState<'가입방식' | '주민번호' | '집주소' | '가입완료'>('가입방식');
 
   return (
-    <RegisterDataContext.Provider value={{ registerData, dispatch }}>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<RegisterMethods />} />
-          <Route path="/id-number" element={<IdNumber />} />
-          <Route path="/address" element={<HomeAddress />} />
-          <Route path="/complete" element={<RegisterComplete />} />
-        </Routes>
-      </BrowserRouter>
-    </RegisterDataContext.Provider>
+    <div className="h-full">
+      {step === '가입방식' && (
+        <RegisterMethods
+          onNext={(data) => {
+            setRegisterData((prev) => ({ ...prev, phone: data }));
+            setStep('주민번호');
+          }}
+        />
+      )}
+      {step === '주민번호' && (
+        <IdNumber
+          onNext={(data) => {
+            setRegisterData((prev) => ({ ...prev, idNumber: data }));
+            setStep('집주소');
+          }}
+        />
+      )}
+      {step === '집주소' && (
+        <HomeAddress
+          onNext={async (data) => {
+            setRegisterData((prev) => ({ ...prev, address: data }));
+            setStep('가입완료');
+          }}
+        />
+      )}
+      {step === '가입완료' && (
+        <RegisterComplete
+          onNext={() => {
+            console.log(registerData);
+            setStep('가입방식');
+            setRegisterData(initialState);
+          }}
+        />
+      )}
+    </div>
   );
 }
 
