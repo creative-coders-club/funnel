@@ -1,31 +1,58 @@
-import viteLogo from '/vite.svg';
 import { useState } from 'react';
 
-import reactLogo from './assets/react.svg';
+import { HomeAddress } from '@/components/homeAddress.tsx';
+import { IdNumber } from '@/components/idNumber.tsx';
+import { RegisterComplete } from '@/components/registerComplete.tsx';
+import { RegisterMethods } from '@/components/registerMethods.tsx';
+import { RegisterData } from '@/types/register.ts';
 import './App.css';
 
+const initialState: RegisterData = {
+  phone: '',
+  idNumber: '',
+  address: '',
+};
+
 function App() {
-  const [count, setCount] = useState(0);
+  const [registerData, setRegisterData] = useState(initialState);
+  const [step, setStep] = useState<'가입방식' | '주민번호' | '집주소' | '가입완료'>('가입방식');
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>count is {count}</button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">Click on the Vite and React logos to learn more</p>
-    </>
+    <div className="h-full">
+      {step === '가입방식' && (
+        <RegisterMethods
+          onNext={(data) => {
+            setRegisterData((prev) => ({ ...prev, phone: data }));
+            setStep('주민번호');
+          }}
+        />
+      )}
+      {step === '주민번호' && (
+        <IdNumber
+          onNext={(data) => {
+            setRegisterData((prev) => ({ ...prev, idNumber: data }));
+            setStep('집주소');
+          }}
+        />
+      )}
+      {step === '집주소' && (
+        <HomeAddress
+          onNext={async (data) => {
+            setRegisterData((prev) => ({ ...prev, address: data }));
+            setStep('가입완료');
+          }}
+        />
+      )}
+      {step === '가입완료' && (
+        <RegisterComplete
+          onNext={() => {
+            console.log(registerData);
+            setStep('가입방식');
+            setRegisterData(initialState);
+          }}
+        />
+      )}
+    </div>
   );
 }
 
